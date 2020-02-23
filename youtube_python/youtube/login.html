@@ -1,0 +1,17 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Log into your Account
+{% endblock %}
+
+
+{% block body %}
+<br>
+<form action="login" method="POST" role="form">
+    {% csrf_token %}
+    {{ form.as_table }}
+
+    <br>
+    <button type="submit" class="btn btn-primary" role="button">Log In</button>
+</form>
+{% endblock %}

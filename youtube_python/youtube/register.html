@@ -1,0 +1,18 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Create a new Account
+{% endblock %}
+
+
+{% block body %}
+
+<h1>Create a "Youtube Clone with Python" Account</h1><br>
+
+<form action="register" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <button type="submit" class="btn btn-primary">Create Account!</button>
+</form>
+{% endblock %}

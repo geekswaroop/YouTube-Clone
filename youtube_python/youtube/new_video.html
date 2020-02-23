@@ -1,0 +1,21 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Upload Video
+{% endblock %}
+
+{% block body %}
+
+<form action="new_video" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+<table>
+{{ form.as_table }}
+<tr>
+    <td></td>
+    <td>
+            <button type="submit" class="btn btn-primary">Upload Video</button>
+    </td>
+</tr>
+</table>
+</form>
+{% endblock %}
