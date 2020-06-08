@@ -3,7 +3,8 @@ The folder youtube_python/youtube is the "App" of this Project.
 
 To install dependencies, run:
 1. myenv\Scripts\activate (Activates virtual environment)
-2. pip3 install -r requirements.txt
+2. python -m pip install --upgrade pip (Upgrading pip)
+3. pip3 install -r requirements.txt
 
 To initialize the Database (sqlite3 file)
 1. del db.sqlite3
