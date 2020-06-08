@@ -1,5 +1,5 @@
 The folder "youtube_python" is the core Django project.
-The folder youtube_python/youtube is the "App" of this Project.
+The folder youtube is the "App" of this Project.
 
 To install dependencies, run:
 1. myenv\Scripts\activate (Activates virtual environment)
