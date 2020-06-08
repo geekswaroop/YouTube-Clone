@@ -1,0 +1,89 @@
+	<!-- <link rel="stylesheet" type="text/css" href="homepage.css"> -->
+<!-- </head> -->
+<!-- <body bgcolor="#414040">
+
+
+	<div class="navbar_top">
+		<div class="navbar_top_left">
+			<ul class="Ytlogo">
+				<li><a href="#"><img src="static/images/Ylogo.png" width='60px' height='50px' alt="image is here!!"></a></li>
+			</ul>
+			<ul class="Ythead">
+				<li><a href="#">YTC</a></li>
+			</ul>
+			
+		</div>
+		<div class="navbar_top_right">
+			<ul class="top_right_content">
+				<li><a href="#">Username</a></li>
+			</ul>
+			<ul class="top_right_content">
+				<li><a href="#">Upload</a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+
+	<div class="navbar_left">
+		<div class="vertical-menu">
+			<a href="#">Home</a>
+			<a href="#">Trending</a>
+			<hr class="horizontal_line">
+			<a href="#">Library</a>
+			<a href="#">History</a>
+			<a href="#">Liked</a>
+			<a href="#">Watch Later</a>
+			<hr class="horizontal_line">
+			<a href="#">Help</a>
+			<a href="#">Feedback</a>
+		</div> 
+		
+	</div> -->
+
+	<!-- </body> -->
+<!-- </html> -->
+
+
+
+
+    <!-- <body>
+        <div class="container">
+               
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+
+                <a class="nav-link {% if request.path == '/' %} active {% endif %}" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/new_video' %} active {% endif %}" href="/new_video">Upload Video</a>
+            </li>
+            {% if user.is_authenticated %}
+
+                {% if channel %}
+            <li class="nav-item">
+                <a class="nav-link" href="/{{ user }}/channel">Visit Channel</a>
+            </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/createchannel">Create Channel</a>
+                </li>
+                {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log Out!</a>
+            </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/login' %} active {% endif %}" href="/login">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/register' %} active {% endif %}" href="/register">Sign Up</a>
+                </li>
+            {% endif %}
+        </ul>
+        <br>
+        <div class="container-fluid">
+        {% block body %}
+        {% endblock %}        
+        </div>  
+    </div> -->

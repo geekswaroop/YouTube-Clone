@@ -1,0 +1,48 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Video
+{% endblock %}
+
+
+	<!-- video_area -->
+
+	{% block body %}
+	<div class="video_area">
+		<div class="ad_area">
+      <video width="640" height="350" controls>
+          <source src="{{ video.path }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      
+      <h1>{{ video.title }}</h1>
+      <h6><i>Published on {{video.datetime}}</i></h6>
+      <hr>
+      <b>Description:</b>
+      <p>{{ video.description }}</p>
+      
+      <!-- <br><br> -->
+      <hr>
+      <h3>Comments</h3>
+      
+      {% if form %}
+      {% if channel %}
+      <form action="/comment" method="POST">
+          {% csrf_token %}
+          {{ form }}
+          <input type='hidden' name='video' value='{{ video.id }}' placeholder="comment">
+          <br>
+          <button type="submit" class="btn btn-primary">Post Comment!</button>
+      </form>
+      {% endif %}
+      {% endif %}
+      
+      {% for comment in comments %}
+      <p>
+      <strong>{{ comment.user }}</strong> posted on: <i>{{ comment.datetime }}</i> <br>
+      {{ comment.text }}
+      </p>
+      {% endfor %}
+		</div>
+		
+	{% endblock %}

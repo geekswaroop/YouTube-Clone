@@ -1,0 +1,20 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Create a new Account
+{% endblock %}
+
+
+{% block body %}
+
+<div class = "register">
+        <h1>Create a YTC Account</h1><br>
+        
+        <form action="register" method="POST">
+                {% csrf_token %}
+                {{ form|linebreaks }}
+                <br>
+                <button type="submit" class="btn btn-primary">Create Account!</button>
+        </form>
+</div>
+{% endblock %}
