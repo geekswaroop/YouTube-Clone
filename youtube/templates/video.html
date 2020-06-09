@@ -20,22 +20,23 @@ Video
       <hr>
 
       <!-- Like Button-->
-      {% if user.is_authenticated %}
-          <!--<a class="btn btn-default" href="video_like/{{ video.id }}/{{ user.id }}"><span class="glyphicon glyphicon-thumbs-up"></span></a> -->
-          {% if likes %}
-              <a class="btn btn-default" href="{% url 'video_like' v_id=video.id u_id=user.id %}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-          {% else %}
-              <a class="btn btn-default" href="{% url 'video_unlike' v_id=video.id u_id=user.id %}"><span style = "color:blue" class="glyphicon glyphicon-thumbs-up"></span></a>
-          {% endif %}
+        {% if user.is_authenticated %}
+            {% if likes %}
+                <a class="btn btn-default" href="{% url 'video_like' v_id=video.id u_id=user.id %}"><span class="glyphicon glyphicon-thumbs-up"> {{ likes_count }}</span></a>
+            {% else %}
+                <a class="btn btn-default" href="{% url 'video_unlike' v_id=video.id u_id=user.id %}"><span style = "color:blue" class="glyphicon glyphicon-thumbs-up"> {{ likes_count }} </span></a>
+            {% endif %}
 
-          {% if dislikes %}
-              <a class="btn btn-default" href="{% url 'video_dislike' v_id=video.id u_id=user.id %}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-          {% else %}
-              <a class="btn btn-default" href="{% url 'video_undislike' v_id=video.id u_id=user.id %}"><span style = "color:blue" class="glyphicon glyphicon-thumbs-down"></span></a>
-          {% endif %}
-      {% endif %}
+            {% if dislikes %}
+                <a class="btn btn-default" href="{% url 'video_dislike' v_id=video.id u_id=user.id %}"><span class="glyphicon glyphicon-thumbs-down"> {{ dislikes_count }}</span></a>
+            {% else %}
+                <a class="btn btn-default" href="{% url 'video_undislike' v_id=video.id u_id=user.id %}"><span style = "color:blue" class="glyphicon glyphicon-thumbs-down"> {{ dislikes_count }}</span></a>
+            {% endif %}
 
-      <br>
+        {% else %}
+            <p style='color:grey'>{{ likes_count }} likes | {{ dislikes_count }} dislikes</p>
+        {% endif %}
+
       <hr>
       <b>Description:</b>
       <p>{{ video.description }}</p>

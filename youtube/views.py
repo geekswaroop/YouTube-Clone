@@ -127,11 +127,13 @@ class VideoView(View):
             else:
                 context['likes'] = False
         
-        if request.user.is_authenticated:
             if Dislike.objects.filter(video=video_by_id, user = request.user).count() == 0:
                 context['dislikes'] = True
             else:
                 context['dislikes'] = False
+
+        context['likes_count'] = Like.objects.filter(video = video_by_id).count()
+        context['dislikes_count'] = Dislike.objects.filter(video = video_by_id).count()
 
         try:
             channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
