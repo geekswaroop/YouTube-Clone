@@ -3,7 +3,7 @@ from django.views.generic.base import View, HttpResponseRedirect, HttpResponse
 from .forms import LoginForm, RegisterForm, NewVideoForm, CommentForm, ChannelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Video, Comment, Channel, Like
+from .models import Video, Comment, Channel, Like, Dislike
 import string, random
 from django.core.files.storage import FileSystemStorage
 import os
@@ -126,6 +126,12 @@ class VideoView(View):
                 context['likes'] = True
             else:
                 context['likes'] = False
+        
+        if request.user.is_authenticated:
+            if Dislike.objects.filter(video=video_by_id, user = request.user).count() == 0:
+                context['dislikes'] = True
+            else:
+                context['dislikes'] = False
 
         try:
             channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
@@ -269,4 +275,18 @@ def video_unlike(request, v_id, u_id):
     user = User.objects.get(id=u_id)
     like = Like.objects.get(user=user, video=video)
     like.delete()
+    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+
+def video_dislike(request, v_id, u_id):
+    video = Video.objects.get(id=v_id)
+    user = User.objects.get(id=u_id)
+    new_dislike = Dislike(user = user, video = video)
+    new_dislike.save()
+    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+
+def video_undislike(request, v_id, u_id):
+    video = Video.objects.get(id=v_id)
+    user = User.objects.get(id=u_id)
+    dislike = Dislike.objects.get(user=user, video=video)
+    dislike.delete()
     return HttpResponseRedirect('/video/{}'.format(str(v_id)))

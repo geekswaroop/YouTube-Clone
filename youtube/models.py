@@ -26,3 +26,10 @@ class Like(models.Model):
 
     class Meta:
         unique_together = (('user', 'video'),)
+
+class Dislike(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('user', 'video'),)

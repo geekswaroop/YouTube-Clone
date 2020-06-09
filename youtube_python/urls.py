@@ -17,7 +17,9 @@ urlpatterns = [
     path('<user>/channel', ChannelView.as_view()),
     # path('video_like/<int:v_id>/<int:u_id>', LikeView.as_view()),
     path('video/<int:v_id>/<int:u_id>/like', views.video_like, name='video_like'),
-    path('video/<int:v_id>/<int:u_id>/unlike', views.video_unlike, name='video_unlike')
+    path('video/<int:v_id>/<int:u_id>/unlike', views.video_unlike, name='video_unlike'),
+    path('video/<int:v_id>/<int:u_id>/dislike', views.video_dislike, name='video_dislike'),
+    path('video/<int:v_id>/<int:u_id>/undislike', views.video_undislike, name='video_undislike')
 ]
 
 from django.conf import settings
