@@ -19,3 +19,10 @@ class Channel(models.Model):
     channel_name = models.CharField(max_length=50, blank=False, null=False)
     subscribers = models.IntegerField(default=0, blank=False, null=False)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+class Like(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('user', 'video'),)

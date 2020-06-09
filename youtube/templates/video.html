@@ -16,25 +16,36 @@ Video
       </video>
       
       <h1>{{ video.title }}</h1>
-      <h6><i>Published on {{video.datetime}}</i></h6>
+      <h6 style='color:grey'><i>Published on {{video.datetime}}</i></h6>
       <hr>
       <b>Description:</b>
       <p>{{ video.description }}</p>
       
       <!-- <br><br> -->
       <hr>
+
+      <!-- Like Button-->
+      {% if user.is_authenticated %}
+          <!--<a class="btn btn-default" href="video_like/{{ video.id }}/{{ user.id }}"><span class="glyphicon glyphicon-thumbs-up"></span></a> -->
+          {% if likes %}
+              <a class="btn btn-default" href="{% url 'video_like' v_id=video.id u_id=user.id %}"><span class="glyphicon glyphicon-thumbs-up">Like</span></a>
+          {% else %}
+              <a class="btn btn-default" href="{% url 'video_unlike' v_id=video.id u_id=user.id %}"><span style = "color:blue" class="glyphicon glyphicon-thumbs-up">Unlike</span></a>
+          {% endif %}
+      {% endif %}
+
       <h3>Comments</h3>
       
       {% if form %}
-      {% if channel %}
-      <form action="/comment" method="POST">
-          {% csrf_token %}
-          {{ form }}
-          <input type='hidden' name='video' value='{{ video.id }}' placeholder="comment">
-          <br>
-          <button type="submit" class="btn btn-primary">Post Comment!</button>
-      </form>
-      {% endif %}
+        {% if channel %}
+        <form action="/comment" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type='hidden' name='video' value='{{ video.id }}' placeholder="comment">
+            <br>
+            <button type="submit" class="btn btn-primary">Post Comment!</button>
+        </form>
+        {% endif %}
       {% endif %}
       
       {% for comment in comments %}

@@ -3,7 +3,7 @@ from django.views.generic.base import View, HttpResponseRedirect, HttpResponse
 from .forms import LoginForm, RegisterForm, NewVideoForm, CommentForm, ChannelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Video, Comment, Channel
+from .models import Video, Comment, Channel, Like
 import string, random
 from django.core.files.storage import FileSystemStorage
 import os
@@ -97,6 +97,7 @@ class LogoutView(View):
         logout(request)
         return HttpResponseRedirect('/')
 
+
 class VideoView(View):
     template_name = 'video.html'
 
@@ -119,6 +120,12 @@ class VideoView(View):
         comments = Comment.objects.filter(video__id=id).order_by('-datetime')
         print(comments)
         context['comments'] = comments
+
+        if request.user.is_authenticated:
+            if Like.objects.filter(video=video_by_id, user = request.user).count() == 0:
+                context['likes'] = True
+            else:
+                context['likes'] = False
 
         try:
             channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
@@ -249,3 +256,17 @@ class NewVideo(View):
         else:
             return HttpResponse('Your form is not valid. Go back and try again.')
 
+
+def video_like(request, v_id, u_id):
+    video = Video.objects.get(id=v_id)
+    user = User.objects.get(id=u_id)
+    new_like = Like(user = user, video = video)
+    new_like.save()
+    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+
+def video_unlike(request, v_id, u_id):
+    video = Video.objects.get(id=v_id)
+    user = User.objects.get(id=u_id)
+    like = Like.objects.get(user=user, video=video)
+    like.delete()
+    return HttpResponseRedirect('/video/{}'.format(str(v_id)))

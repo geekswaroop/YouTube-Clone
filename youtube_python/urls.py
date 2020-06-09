@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from youtube.views import HomeView, NewVideo, CommentView, LoginView, RegisterView, VideoView, VideoFileView, LogoutView, CreateChannelView, ChannelView
+from youtube import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,7 +14,10 @@ urlpatterns = [
     path('get_video/<file_name>', VideoFileView.as_view()),
     path('logout', LogoutView.as_view()),
     path('createchannel', CreateChannelView.as_view()),
-    path('<user>/channel', ChannelView.as_view())
+    path('<user>/channel', ChannelView.as_view()),
+    # path('video_like/<int:v_id>/<int:u_id>', LikeView.as_view()),
+    path('video/<int:v_id>/<int:u_id>/like', views.video_like, name='video_like'),
+    path('video/<int:v_id>/<int:u_id>/unlike', views.video_unlike, name='video_unlike')
 ]
 
 from django.conf import settings
