@@ -13,20 +13,11 @@ class ChannelView(View):
     template_name = "channelview.html"
 
     def get(self, request, user):
-        if request.user.is_authenticated:
-            # print(Channel.objects.get().channel_name)
-            # print(user.id)
-            # print(user)
-            videos = Video.objects.filter(user__username = user).order_by("-datetime")
-            # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            # video_path = 'http://localhost:8000/get_video/'+videos.path
-            # print(videos)
-            print(Channel.objects.filter(user__username = user).get())
-            
-            return render(request, self.template_name, {'channel':Channel.objects.filter(user__username = user).get(), 'videos': videos})
-            # return render(request, self.template_name, {'channel':Channel.objects.get()})
-            
-            # return render(request, self.template_name, context)
+        videos = Video.objects.filter(user__username = user).order_by("-datetime")
+        context = {'videos': videos}
+        context['channel'] = Channel.objects.filter(user__username = user).get()
+        
+        return render(request, self.template_name, context)
 
 
 class CreateChannelView(View):

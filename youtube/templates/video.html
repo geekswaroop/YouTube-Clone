@@ -19,7 +19,7 @@ Video
       <h6 style='color:grey'><i>Published on {{video.datetime}}</i></h6>
       <hr>
 
-      <!-- Like Button-->
+      <!-- Like / Dislike Buttons -->
         {% if user.is_authenticated %}
             {% if likes %}
                 <a class="btn btn-default" href="{% url 'video_like' v_id=video.id u_id=user.id %}"><span class="glyphicon glyphicon-thumbs-up"> {{ likes_count }}</span></a>
