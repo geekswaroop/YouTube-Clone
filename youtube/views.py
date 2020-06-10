@@ -283,3 +283,21 @@ def video_undislike(request, v_id, u_id):
     dislike = Dislike.objects.get(user=user, video=video)
     dislike.delete()
     return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+
+
+def liked_videos(request):
+    context = {}
+    if request.user.is_authenticated:
+        likes = Like.objects.filter(user = request.user)
+        context['likes'] = likes
+
+    try:
+        channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
+        print(channel)
+        context['channel'] = channel
+    except Channel.DoesNotExist:
+        channel = False
+        
+    return render(request, "liked_videos.html", context)
+
+        
