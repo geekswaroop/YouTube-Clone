@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -33,3 +35,8 @@ class Dislike(models.Model):
 
     class Meta:
         unique_together = (('user', 'video'),)
+
+class Video_View(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(default=timezone.now)

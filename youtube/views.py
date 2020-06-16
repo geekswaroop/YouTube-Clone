@@ -3,11 +3,12 @@ from django.views.generic.base import View, HttpResponseRedirect, HttpResponse
 from .forms import LoginForm, RegisterForm, NewVideoForm, CommentForm, ChannelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Video, Comment, Channel, Like, Dislike
+from .models import Video, Comment, Channel, Like, Dislike, Video_View
 import string, random
 from django.core.files.storage import FileSystemStorage
 import os
 from wsgiref.util import FileWrapper
+from django.utils import timezone
 
 class ChannelView(View):
     template_name = "channelview.html"
@@ -122,6 +123,14 @@ class VideoView(View):
                 context['dislikes'] = True
             else:
                 context['dislikes'] = False
+
+            if Video_View.objects.filter(video=video_by_id, user = request.user).count() == 0:
+                new_view = Video_View(video = video_by_id, user = request.user, datetime = timezone.now())
+                new_view.save()
+            else:
+                view = Video_View.objects.get(video=video_by_id, user = request.user)
+                view.datetime = timezone.now()
+                view.save()
 
         context['likes_count'] = Like.objects.filter(video = video_by_id).count()
         context['dislikes_count'] = Dislike.objects.filter(video = video_by_id).count()
@@ -299,5 +308,20 @@ def liked_videos(request):
         channel = False
         
     return render(request, "liked_videos.html", context)
+
+def watch_history(request):
+    context = {}
+    if request.user.is_authenticated:
+        views = Video_View.objects.filter(user = request.user).order_by('-datetime')
+        context['views'] = views
+
+    try:
+        channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
+        print(channel)
+        context['channel'] = channel
+    except Channel.DoesNotExist:
+        channel = False
+
+    return render(request, "watch_history.html", context)
 
         
