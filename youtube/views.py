@@ -3,7 +3,7 @@ from django.views.generic.base import View, HttpResponseRedirect, HttpResponse
 from .forms import LoginForm, RegisterForm, NewVideoForm, CommentForm, ChannelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Video, Comment, Channel, Like, Dislike, Video_View
+from .models import Video, Comment, Channel, Like, Dislike, Video_View, Channel_Subscription
 import string, random
 from django.core.files.storage import FileSystemStorage
 import os
@@ -17,6 +17,13 @@ class ChannelView(View):
         videos = Video.objects.filter(user__username = user).order_by("-datetime")
         context = {'videos': videos}
         context['channel'] = Channel.objects.filter(user__username = user).get()
+
+        if request.user.is_authenticated:
+            channel = Channel.objects.get(user__username = user)
+            if Channel_Subscription.objects.filter(user=request.user, channel=channel).count() == 0:
+                context['subscribed'] = False
+            else:
+                context['subscribed'] = True
         
         return render(request, self.template_name, context)
 
@@ -352,4 +359,26 @@ def trending(request):
 def help(request):
     return render(request, "aboutUs.html", {})
 
-        
+def channel_subscribe(request, c_id):
+    user = request.user
+    channel = Channel.objects.get(id = c_id)
+    new_subscription = Channel_Subscription(user = user, channel = channel)
+    new_subscription.save()
+
+    n = channel.subscribers 
+    channel.subscribers = n+1
+    channel.save()
+
+    return HttpResponseRedirect('/{}/channel'.format(channel.user.username))
+
+def channel_unsubscribe(request, c_id):
+    user = request.user
+    channel = Channel.objects.get(id = c_id)
+    subscription = Channel_Subscription.objects.get(user = user, channel = channel)
+    subscription.delete()
+
+    n = channel.subscribers 
+    channel.subscribers = n-1
+    channel.save()
+
+    return HttpResponseRedirect('/{}/channel'.format(channel.user.username))

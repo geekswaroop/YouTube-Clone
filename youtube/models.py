@@ -27,17 +27,15 @@ class Like(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = (('user', 'video'),)
-
 class Dislike(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (('user', 'video'),)
 
 class Video_View(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
     datetime = models.DateTimeField(default=timezone.now)
+
+class Channel_Subscription(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)

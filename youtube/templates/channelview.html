@@ -9,10 +9,18 @@ Your Channel
     <div class="channelview">
 		<h1>Welcome To {{ channel.channel_name }}</h1><br>
 		<div>Author : {{ channel.user }}</div>
-        <!--<div align="right" style="margin-right:50px">
-			<a><button class="button button5" style="background-color:red; width:150px"><b>Subscribe</b></button> </a>
+
+		<div align="right" style="margin-right:50px">
+			{% if user.is_authenticated %}
+				{% if subscribed == False %}
+					<a href="{% url 'channel_subscribe' c_id=channel.id %}"><button class="button button5" style="background-color:red; width:150px"><b>Subscribe</b></button> </a>
+				{% else %}
+					<a href="{% url 'channel_unsubscribe' c_id=channel.id %}"><button class="button button5" style="background-color:grey; width:150px"><b>Unsubscribe</b></button> </a>
+				{% endif %}
+			{% endif %}
 			<p style="margin-right:30px"><b>Subscribers : {{ channel.subscribers }}</b></p>
-		</div>-->
+		</div>
+		
     </div>
     
 	<div class="video_area">
