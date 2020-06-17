@@ -1,4 +1,5 @@
 {% extends "parent.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Create a new Channel
@@ -10,8 +11,7 @@ Create a new Channel
                 <h1>Create your channel</h1>
                 <form action="createchannel" method="POST">
                         {% csrf_token %}
-                        <div>Name: </div>
-                        {{form.channel_name|linebreaks}}
+                        {{form|crispy}}
                         <br>
                         <button type="submit" class="btn btn-primary">Create Channel!</button>
                 </form>

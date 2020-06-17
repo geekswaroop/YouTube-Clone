@@ -15,11 +15,11 @@ class CommentForm(forms.Form):
     #video = forms.IntegerField(widget=forms.HiddenInput(), initial=1) 
     
 class NewVideoForm(forms.Form):
-    title = forms.CharField(label='Title', max_length=20)
-    description = forms.CharField(label='Description', max_length=300)
+    title = forms.CharField(label=' Video Title', max_length=20)
+    description = forms.CharField(label='Video Description', max_length=300)
     file = forms.FileField()
 
 class ChannelForm(forms.Form):
-    channel_name = forms.CharField(max_length=50, label='Channel')
+    channel_name = forms.CharField(max_length=50, label='Channel Name')
     # username = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     # suscribers = models.IntegerField(default=0, blank=False, null=False)

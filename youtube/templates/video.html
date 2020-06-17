@@ -1,4 +1,5 @@
 {% extends "parent.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Video
@@ -51,7 +52,7 @@ Video
         {% if channel %}
         <form action="/comment" method="POST">
             {% csrf_token %}
-            {{ form }}
+            {{ form|crispy }}
             <input type='hidden' name='video' value='{{ video.id }}' placeholder="comment">
             <br>
             <button type="submit" class="btn btn-primary">Post Comment!</button>
@@ -60,10 +61,10 @@ Video
       {% endif %}
       
       {% for comment in comments %}
-      <p>
-      <strong>{{ comment.user }}</strong> posted on: <i>{{ comment.datetime }}</i> <br>
-      {{ comment.text }}
-      </p>
+            <p>
+            <strong>{{ comment.user }}</strong> posted on: <i>{{ comment.datetime }}</i> <br>
+            {{ comment.text }}
+            </p>
       {% endfor %}
 		</div>
 		

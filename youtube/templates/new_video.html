@@ -1,4 +1,5 @@
 {% extends "parent.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Upload Video
@@ -11,13 +12,7 @@ Upload Video
         <form action="new_video" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- {{  -->
-                        <div>Title: </div>
-                        {{form.title|linebreaks}}
-                        <div>Description: </div>
-                        {{form.description|linebreaks}}  
-                        <div>
-                        {{form.file|linebreaks}}                                          
-                        </div>
+                        {{form|crispy}}
                 <!-- }} -->
                 <br>
                 <button type="submit" class="btn btn-primary">Upload Video!</button>
