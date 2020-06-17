@@ -9,7 +9,7 @@ urlpatterns = [
     path('login', LoginView.as_view()),
     path('register', RegisterView.as_view()),
     path('new_video', NewVideo.as_view()),
-    path('video/<int:id>', VideoView.as_view()),
+    path('video/<int:id>/<int:new>/', VideoView.as_view()),
     path('comment', CommentView.as_view()),
     path('get_video/<file_name>', VideoFileView.as_view()),
     path('logout', LogoutView.as_view()),

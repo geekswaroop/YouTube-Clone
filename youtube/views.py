@@ -93,8 +93,15 @@ class LogoutView(View):
 class VideoView(View):
     template_name = 'video.html'
 
-    def get(self, request, id):
-        #fetch video from DB by ID
+    def get(self, request, id, new):
+        
+        # Increment number of views
+        if new == 1:
+            video_by_id = Video.objects.get(id=id)
+            n = video_by_id.number_of_views
+            video_by_id.number_of_views = n+1
+            video_by_id.save()
+
         video_by_id = Video.objects.get(id=id)
         BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         video_by_id.path = 'http://localhost:8000/get_video/'+video_by_id.path
@@ -107,7 +114,6 @@ class VideoView(View):
             print('user signed in')
             comment_form = CommentForm()
             context['form'] = comment_form
-
         
         comments = Comment.objects.filter(video__id=id).order_by('-datetime')
         print(comments)
@@ -186,7 +192,7 @@ class CommentView(View):
             
             new_comment = Comment(text=text, user=request.user, video=video)
             new_comment.save()
-            return HttpResponseRedirect('/video/{}'.format(str(video_id)))
+            return HttpResponseRedirect('/video/{}/{}/'.format(str(video_id), str(0)))
         return HttpResponse('This is Register view. POST Request.')
 
 class RegisterView(View):
@@ -256,11 +262,12 @@ class NewVideo(View):
             new_video = Video(title=title, 
                             description=description,
                             user=request.user,
-                            path=path)
+                            path=path,
+                            number_of_views = 0)
             new_video.save()
             
             # redirect to detail view template of a Video
-            return HttpResponseRedirect('/video/{}'.format(new_video.id))
+            return HttpResponseRedirect('/video/{}/{}/'.format(new_video.id, str(1)))
         else:
             return HttpResponse('Your form is not valid. Go back and try again.')
 
@@ -270,28 +277,28 @@ def video_like(request, v_id, u_id):
     user = User.objects.get(id=u_id)
     new_like = Like(user = user, video = video)
     new_like.save()
-    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+    return HttpResponseRedirect('/video/{}/{}/'.format(str(v_id), str(0)))
 
 def video_unlike(request, v_id, u_id):
     video = Video.objects.get(id=v_id)
     user = User.objects.get(id=u_id)
     like = Like.objects.get(user=user, video=video)
     like.delete()
-    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+    return HttpResponseRedirect('/video/{}/{}/'.format(str(v_id), str(0)))
 
 def video_dislike(request, v_id, u_id):
     video = Video.objects.get(id=v_id)
     user = User.objects.get(id=u_id)
     new_dislike = Dislike(user = user, video = video)
     new_dislike.save()
-    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+    return HttpResponseRedirect('/video/{}/{}/'.format(str(v_id), str(0)))
 
 def video_undislike(request, v_id, u_id):
     video = Video.objects.get(id=v_id)
     user = User.objects.get(id=u_id)
     dislike = Dislike.objects.get(user=user, video=video)
     dislike.delete()
-    return HttpResponseRedirect('/video/{}'.format(str(v_id)))
+    return HttpResponseRedirect('/video/{}/{}/'.format(str(v_id), str(0)))
 
 
 def liked_videos(request):
