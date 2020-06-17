@@ -148,6 +148,10 @@ class VideoView(View):
         except Channel.DoesNotExist:
             channel = False
 
+        uploader = video_by_id.user
+        uploader_channel = Channel.objects.get(user = uploader)
+        context['uploader_channel'] = uploader_channel
+
         return render(request, self.template_name, context)
 
 
