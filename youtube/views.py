@@ -345,4 +345,7 @@ def trending(request):
 
     return render(request, "trending.html", context)
 
+def help(request):
+    return render(request, "aboutUs.html", {})
+
         

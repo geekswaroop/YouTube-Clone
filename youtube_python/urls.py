@@ -22,6 +22,7 @@ urlpatterns = [
     path('liked/', views.liked_videos, name='liked_videos'),
     path('watch_history/', views.watch_history, name = 'watch_history'),
     path('trending/', views.trending, name='trending'),
+    path('help/', views.help, name='help'),
 ]
 
 from django.conf import settings
