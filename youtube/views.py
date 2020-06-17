@@ -331,4 +331,18 @@ def watch_history(request):
 
     return render(request, "watch_history.html", context)
 
+def trending(request):
+    context = {}
+    videos = Video.objects.all().order_by('-number_of_views')[:5]
+    context['videos'] = videos
+
+    try:
+        channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
+        print(channel)
+        context['channel'] = channel
+    except Channel.DoesNotExist:
+        channel = False
+
+    return render(request, "trending.html", context)
+
         

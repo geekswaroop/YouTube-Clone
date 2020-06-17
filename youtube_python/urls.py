@@ -21,6 +21,7 @@ urlpatterns = [
     path('video/<int:v_id>/<int:u_id>/undislike', views.video_undislike, name='video_undislike'),
     path('liked/', views.liked_videos, name='liked_videos'),
     path('watch_history/', views.watch_history, name = 'watch_history'),
+    path('trending/', views.trending, name='trending'),
 ]
 
 from django.conf import settings
