@@ -1,0 +1,22 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Channels List
+{% endblock %}
+
+{% block body %}
+	<div class="video_area">
+		<div class="ad_area">
+            <h1>Channels</h1>
+            <br>
+            <hr>
+            {% for channel in channels %}
+            <div>
+                <p><a href="/{{ channel.user.username }}/channel"> <button class="button button5" style="background-color:cyan; height:50px; font-size:20px">{{ channel.channel_name }}</button></a></p>
+                <br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+		
+{% endblock %}

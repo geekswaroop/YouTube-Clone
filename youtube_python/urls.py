@@ -26,6 +26,7 @@ urlpatterns = [
     path('channel_subscribe/<int:c_id>/', views.channel_subscribe, name='channel_subscribe'),
     path('channel_unsubscribe/<int:c_id>/', views.channel_unsubscribe, name='channel_unsubscribe'),
     path('subscriptions/', views.subscriptions, name = 'subscriptions'),
+    path('channels_list/', views.channels_list, name = 'channels_list'),
 ]
 
 from django.conf import settings
