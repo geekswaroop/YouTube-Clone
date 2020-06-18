@@ -274,7 +274,8 @@ class NewVideo(View):
                             description=description,
                             user=request.user,
                             path=path,
-                            number_of_views = 0)
+                            number_of_views = 0,
+                            datetime = timezone.now())
             new_video.save()
             
             # redirect to detail view template of a Video
