@@ -2,6 +2,12 @@
 
 This is a video streaming application built using Django.
 
+ ## Team Members
+ 1. K Krishna Swaroop (181CO125)
+ 2. Niranjan S Yadiyala (181CO136)
+ 
+ ## Directions to Run
+ 
 The folder "youtube_python" is the core Django project.
 The folder youtube is the "App" of this Project.
 
