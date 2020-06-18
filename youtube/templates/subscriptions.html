@@ -1,0 +1,38 @@
+{% extends "parent.html" %}
+
+{% block title %}
+Subscriptions
+{% endblock %}
+
+{% block body %}
+	<div class="video_area">
+		<div class="ad_area">
+            <h1>Videos of Your Subscribed Channels</h1>
+            <br>
+            <hr>
+            
+            {% if user.is_authenticated %}
+                {% for video in videos %}
+                    <div class = "video_advertisement col-md-6">
+                        <div class="video_title">
+                            <h2 align="center" style="font-family: Courier New">{{ video.title }}</h2>
+                        </div>
+                        <div class="video_description">
+                            <h4 align="left">{{ video.description }}</h5>
+                            <h6 align="left, bottom" style="position: relative; float:bottom; margin-bottom:0px">Uploaded by {{ video.user }} on {{ video.datetime }}</h6>
+                            <h6 align = "left">{{ video.number_of_views }} views</h6>
+                        </div>
+                        <div class="watch_now">
+                            <a href="/video/{{ video.id }}/{{ 1 }}/"><button class="button button5">Watch Now!</button></a>	
+                        </div>
+                    </div>
+                {% endfor %}
+                
+            {% else %}
+                <h2>Sign in to view your subscriptions</h2>
+                
+            {% endif %}
+        </div>
+    </div>
+		
+{% endblock %}

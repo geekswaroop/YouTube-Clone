@@ -382,3 +382,25 @@ def channel_unsubscribe(request, c_id):
     channel.save()
 
     return HttpResponseRedirect('/{}/channel'.format(channel.user.username))
+
+def subscriptions(request):
+    context = {}
+
+    if request.user.is_authenticated:
+        videos = []
+        user_subscriptions = Channel_Subscription.objects.filter(user = request.user)
+        for subscription in user_subscriptions:
+            channel = subscription.channel
+            owner = channel.user
+            videos.extend(list(Video.objects.filter(user = owner)))
+        
+        context['videos'] = videos
+
+    try:
+        channel = Channel.objects.filter(user__username = request.user).get().channel_name != ""
+        print(channel)
+        context['channel'] = channel
+    except Channel.DoesNotExist:
+        channel = False
+
+    return render(request, "subscriptions.html", context)
