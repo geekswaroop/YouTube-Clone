@@ -1,4 +1,4 @@
-Django==2.2.10
+Django==2.2.18
 django-debug-toolbar==2.1
 django-excel-response2==2.0.8
 django-six==1.0.4
